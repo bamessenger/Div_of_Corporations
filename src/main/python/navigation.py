@@ -5,7 +5,7 @@ from src.main.python.fileparser import ParseFile
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
-# Global variable - change will update all URL instances
+# Global variables
 urlMain = 'https://icis.corp.delaware.gov/ecorp/entitysearch/NameSearch.aspx'
 driverPath = 'C:/Users/brand/OneDrive - InsureGood LLC/Documents - ' \
              'Cedar Insights/applications/WebScrape/Div_of_Corporations' \
@@ -39,6 +39,8 @@ class SiteNavigation:
                     ec.presence_of_element_located(
                         (By.ID, 'ctl00_ContentPlaceHolder1_frmEntityName')))
                 entityNameSearch.clear()
+                # Pull search items in excel list and populate search box with
+                # wildcard search characters
                 entityNameSearch.send_keys('*' + excelList[i] + '*')
                 entityNameSearchBtn = self.wait.until(
                     ec.presence_of_element_located(
@@ -96,6 +98,7 @@ class SiteNavigation:
             (By.ID, 'ctl00_ContentPlaceHolder1_lblEntityName')))
         incDate = self.wait.until(ec.presence_of_element_located(
             (By.ID, 'ctl00_ContentPlaceHolder1_lblIncDate')))
+        # Input data into dictionary where fileNumber is key
         self.entityDict[
             fileNumber.text] = entityName.text, incDate.text
         print(self.entityDict)

@@ -1,5 +1,7 @@
 from openpyxl import Workbook, load_workbook
 
+# Global variables
+
 
 class ParseFile:
     def __init__(self):
