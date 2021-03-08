@@ -42,6 +42,7 @@ class SiteNavigation:
                 # Pull search items in excel list and populate search box with
                 # wildcard search characters
                 entityNameSearch.send_keys('*' + excelList[i] + '*')
+                # Find search button and click it
                 entityNameSearchBtn = self.wait.until(
                     ec.presence_of_element_located(
                         (By.ID, 'ctl00_ContentPlaceHolder1_btnSubmit')))

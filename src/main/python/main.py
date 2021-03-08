@@ -1,10 +1,20 @@
-from navigation import SiteNavigation
+import sys
 
-def main():
-    siteNav = SiteNavigation()
-    siteNav.getUrl()
-    siteNav.searchSite()
+from fbs_runtime.application_context.PyQt5 import ApplicationContext
+
+from appinit import MainWindowUI
 
 
-if __name__ == "__main__":
-    main()
+class AppContext(ApplicationContext):
+    def run(self):
+        window = MainWindowUI()
+        version = self.build_settings["version"]
+        window.setWindowTitle("WebScrapy_DOC v" + version)
+        window.show()
+        return self.app.exec_()
+
+
+if __name__ == '__main__':
+    appctxt = AppContext()  # 1. Instantiate ApplicationContext
+    exit_code = appctxt.run()  # 2. Invoke run()
+    sys.exit(exit_code)
