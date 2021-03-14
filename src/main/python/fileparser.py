@@ -1,14 +1,9 @@
 from openpyxl import Workbook, load_workbook
 
-# Global variables
-
 
 class ParseFile:
-    def __init__(self):
-        self.filepath = 'C:/Users/brand/OneDrive - InsureGood ' \
-                                 'LLC/Documents - Cedar ' \
-                                 'Insights/applications/WebScrape' \
-                                 '/Div_of_Corporations/SPAC List.xlsx'
+    def __init__(self, fPath):
+        self.filepath = fPath
         self.wb = Workbook()
         self.search_list = []
     def fileParser(self):
@@ -26,6 +21,3 @@ class ParseFile:
     def getExcelFile(self):
         self.fileParser()
         return self.search_list
-
-    def writeExcel(self, data):
-        pass

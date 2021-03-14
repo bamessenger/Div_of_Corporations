@@ -1,7 +1,6 @@
 import sys
 
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
-
 from appinit import MainWindowUI
 
 
