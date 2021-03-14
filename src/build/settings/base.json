@@ -1,6 +1,6 @@
 {
-    "app_name": "DivOfCorporations",
+    "app_name": "Web Scrapy - DOC",
     "author": "Brandon Messenger",
     "main_module": "src/main/python/main.py",
-    "version": "0.0.0"
+    "version": "1.0.0"
 }

@@ -28,5 +28,10 @@ class WriteFile:
         self.newMast = self.existingDict.update(dict2)
 
     def setNewMastDict(self, newDict):
-        self.newDict = newDict
-        self.dictMerge(self.newDict)
+        # grab current excel data and create a temporary dictionary
+        self.currExcel2Dict()
+        # receive scraped data dictionary and pass it to merging method
+        self.dictMerge(newDict)
+        # once both dictionaries are merged, re-write the updated dictionary
+        # back to Excel file
+        self.newMast2Excel()
