@@ -64,7 +64,7 @@ class MainWindowUI(QtWidgets.QMainWindow):
 
     def completed(self):
         self.msgBox.setIcon(QMessageBox.Information)
-        self.msgBox.setText("Scraping Completed Successfully")
+        self.msgBox.setText("Scraping Complete")
         self.msgBox.setWindowTitle("Program Status")
         self.msgBox.setStandardButtons(QMessageBox.Ok)
         self.msgBox.exec()
@@ -86,11 +86,18 @@ class MainWindowUI(QtWidgets.QMainWindow):
                 self.srchFile = self.ui.freeformSrch.toPlainText()
                 self.searchFile = self.srchFile.split(',')
                 self.searchFile = [x.strip(' ') for x in self.searchFile]
+            # clear Scraping Stats & Scraping Dialogue in case user reruns the
+            # application
+            self.ui.scrapingDialogue.clear()
+            self.ui.txtRuntime.setText("")
+            self.ui.txtSrchItm.setText("")
+            self.ui.txtScrapes.setText("")
+            self.ui.txtCompleted.setText("")
             print(self.searchFile)
             print(self.masterFile)
         except AttributeError:
             self.msgBox.setIcon(QMessageBox.Critical)
-            self.msgBox.setText("Please check Search Criteria/Master File")
+            self.msgBox.setText("Missing Search Criteria and/or Master File")
             self.msgBox.setWindowTitle("Missing Data")
             self.msgBox.setStandardButtons(QMessageBox.Ok)
             self.msgBox.exec()
@@ -111,7 +118,6 @@ class MainWindowUI(QtWidgets.QMainWindow):
         self.worker.progressCompleted.connect(self.ui.txtCompleted.setText)
         self.worker.finished.connect(self.completed)
         self.worker.finished.connect(self.thread.quit)
-        self.worker.finished.connect(self.worker.deleteLater)
-        self.thread.finished.connect(self.thread.deleteLater)
         # start worker
         self.thread.start()
+

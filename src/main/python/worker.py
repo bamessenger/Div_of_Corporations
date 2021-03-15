@@ -33,9 +33,10 @@ class Worker(QObject):
         self.driver = webdriver.Chrome(executable_path=binary_path,
                                        chrome_options=self.options)
         self.wait = WebDriverWait(self.driver, 5)
+        self.masterFile = mFile
         self.searchData = scFile
         #self.searchFile = ParseFile(scFile)
-        self.dataDict = WriteFile(mFile)
+        self.dataDict = WriteFile()
         self.entityDict = {}
 
     def run(self):
@@ -46,7 +47,10 @@ class Worker(QObject):
             self.searchFile = ParseFile(self.searchData)
             self.searchList = self.searchFile.getExcelFile()
             self.searchListLen = len(self.searchList)
+            self.progressSearch.emit(str(self.searchListLen))
+            self.currentStatus.emit('Reading')
         else:
+            self.searchList = self.searchData
             self.searchListLen = len(self.searchList)
             self.progressSearch.emit(str(self.searchListLen))
             self.currentStatus.emit('Reading')
@@ -112,7 +116,11 @@ class Worker(QObject):
         # when scraping complete, send captured data to filewriter to
         # write back into master data file
         self.currentStatus.emit('Writing')
-        self.dataDict.setNewMastDict(self.entityDict)
+        self.dataDict.setNewMastDict(self.entityDict, self.masterFile)
+        self.currentStatus.emit('Completed')
+        self.driver.quit()
+        self.progressCompleted.emit(str('100%'))
+        self.finished.emit()
 
     def getInfo(self):
         self.driver.implicitly_wait(5)
